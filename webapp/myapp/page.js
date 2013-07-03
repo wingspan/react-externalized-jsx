@@ -21,11 +21,16 @@ define([
 
         var model = new TodoListCollection();
 
-        util.getJSON('/api/todos').done(_.bind(model.reset, model));
+        var divs = ['todo1', 'todo2', 'todo3'];
+        divs.map(function (id) {
+            var sel = _.str.sprintf('[data-id="%s"]', id);
+            React.renderComponent(TodoListView({
+                model: model
+            }), $(sel)[0]);
+        });
 
-        React.renderComponent(TodoListView({
-            model: model
-        }), $('[data-wspt="root"]')[0]);
+
+        util.getJSON('/api/todos').done(_.bind(model.reset, model));
 
 
         // Save reference to model for console debugging, e.g.
